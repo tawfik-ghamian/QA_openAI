@@ -319,3 +319,79 @@ ENTERPRISES_CARD_PROMPT = ChatPromptTemplate.from_messages([
         )
     )
 ])
+
+POP_RACE_ETHN_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please review the graph and provide a summary of the most significant insights, focusing on."
+            # "Please analyze the graph and provide a summary of its key insights."
+            # "Please help me to understand the key insights graph  "
+            # "please help me to understand this graph with this data for each name by replacing the name with name the country of this zipcode "
+            # "with providing first a brief introducion and in the last brief summary to all paragraph"
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+POP_MATERIAL_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+POP_RELSHIP_HH_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+POP_GENDER_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+POP_EDU_ATTAINMENT_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])

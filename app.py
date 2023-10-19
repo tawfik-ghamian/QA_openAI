@@ -12,7 +12,8 @@ from dotenv import load_dotenv
 from prompts import (PROMPTS, OUTPUT_PARSERS, HEADINGS,
                      MULTIPLES_TBL_PROMPT, RISK_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, 
                      MAIN_ACTIVITY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAER_PROMPT, 
-                     DEFINITION_PROMPT, REVENUE_CARD_PROMPT, PROFIT_CARD_PROMPT, PROFIT_MARGIN_CARD_PROMPT, ENTERPRISES_CARD_PROMPT)
+                     DEFINITION_PROMPT, REVENUE_CARD_PROMPT, PROFIT_CARD_PROMPT, PROFIT_MARGIN_CARD_PROMPT, ENTERPRISES_CARD_PROMPT,
+                     POP_RACE_ETHN_PROMPT,POP_EDU_ATTAINMENT_PROMPT,POP_RELSHIP_HH_PROMPT,POP_MATERIAL_PROMPT,POP_GENDER_PROMPT,DEMOGRAPHIC_OVERVIEW_PROMPT)
 from chains import get_chains_results, get_chain_result
 from gpt_params import MODELS, MAX_TOKEN
 from enums import FN
@@ -75,6 +76,12 @@ REVENUE_CARD_CHAIN = LLMChain(llm=llm, prompt=REVENUE_CARD_PROMPT, verbose=True)
 PROFIT_CARD_CHAIN = LLMChain(llm=llm, prompt=PROFIT_CARD_PROMPT, verbose=True)
 PROFIT_MARGIN_CARD_CHAIN = LLMChain(llm=llm, prompt=PROFIT_MARGIN_CARD_PROMPT, verbose=True)
 ENTERPRISES_CARD_CHAIN = LLMChain(llm=llm, prompt=ENTERPRISES_CARD_PROMPT, verbose=True)
+POP_RACE_ETHN_CHAIN = LLMChain(llm=llm, prompt=POP_RACE_ETHN_PROMPT, verbose=True)
+POP_MATERIAL_CHAIN = LLMChain(llm=llm, prompt=POP_MATERIAL_PROMPT, verbose=True)
+POP_RELSHIP_HH_CHAIN = LLMChain(llm=llm, prompt=POP_RELSHIP_HH_PROMPT, verbose=True)
+POP_GENDER_CHAIN = LLMChain(llm=llm, prompt=POP_GENDER_PROMPT, verbose=True)
+POP_EDU_ATTAINMENT_CHAIN = LLMChain(llm=llm, prompt=POP_EDU_ATTAINMENT_PROMPT, verbose=True)
+DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMPT, verbose=True)
 
 # ** Main **
 st.header("Powered by :robot_face:")
@@ -410,3 +417,148 @@ if selected_fn == FN.FN12.value:
 
             with st.expander("##### Explanation"):
                 st.markdown(result)
+
+
+# == Function 13 ==
+if selected_fn == FN.FN13.value:
+
+    st.markdown("Function 13: The AI will explain the entered population by race ethnicity card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_RACE_ETHN_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.pop_race_ethnicity_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 14 ==
+if selected_fn == FN.FN14.value:
+
+    st.markdown("Function 14: The AI will explain the entered population by marital status card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_MATERIAL_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.pop_marital_status_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 15 ==
+if selected_fn == FN.FN15.value:
+
+    st.markdown("Function 15: The AI will explain the entered population by relationship and household card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_RELSHIP_HH_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.pop_relship_hh_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 16 ==
+if selected_fn == FN.FN16.value:
+
+    st.markdown("Function 16: The AI will explain the entered population by gender card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_GENDER_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.pop_gender_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 17 ==
+if selected_fn == FN.FN17.value:
+
+    st.markdown("Function 17: The AI will explain the entered population by educational attainment status card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_EDU_ATTAINMENT_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.pop_edu_attainment_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 18 ==
+if selected_fn == FN.FN18.value:
+
+    st.markdown("Function 18: The AI will explain the entered demographic overview card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
+            "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
+            })
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)

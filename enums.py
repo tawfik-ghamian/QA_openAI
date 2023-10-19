@@ -14,4 +14,11 @@ class FN(Enum):
     FN10 = "Function 10: Profit Figure Card Explanation"
     FN11 = "Function 11: Profit Margin Figure Card Explanation"
     FN12 = "Function 12: Enterprises Figure Card Explanation"
+    FN13 = "Function 13: population by race ethnicity card Figure Card Explanation"
+    FN14 = "Function 14: population by marital status card Figure Card Explanation"
+    FN15 = "Function 15: population by relationship and household card Figure Card Explanation"
+    FN16 = "Function 16: population by gender card Figure Card Explanation"
+    FN17 = "Function 17: population by educational attainment status card Figure Card Explanation"
+    FN18 = "Function 18: demographic overview card Figure Card Explanation"
+    # FN19 = "Function 19: pop card Figure Card Explanation"
 

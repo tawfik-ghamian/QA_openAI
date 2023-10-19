@@ -142,110 +142,155 @@ def enterprises_card_formatter(enterprises_card_obj):
     table = "\n".join(rows)
     return table
 
+def pop_race_ethnicity_formatter(obj): 
+    json_decode = obj.get("PopulationByRaceEthnicity", "")
+    
+    component = ["OneRace", "TwoOrMoreRaces", "White", "Black", "AmericanIndian", "Asian", "PacificIslander", "Other", "Hispanic"]
+    rows = [
+        f"{'Name':<10}{'Total':<10}{'Year':<10}"+"   ".join(["  ", *[f"{i:<10}" for i in component]]),
+        *[
+            "   ".join(
+                [
+                    f"{k.get('Name','').split(':')[-1]:<10}",
+                    f"{k['Row']['Total']:<10}",
+                    f"{k['Row']['Year']:<10}",
+                    f"value: {k['Row']['OneRace']['Value']} percentage: {k['Row']['OneRace']['Percentage']:<25}",
+                    f"value: {k['Row']['TwoOrMoreRaces']['Value']} percentage: {k['Row']['TwoOrMoreRaces']['Percentage']:<25}",
+                    f"value: {k['Row']['White']['Value']} percentage: {k['Row']['White']['Percentage']:<25}",
+                    f"value: {k['Row']['Black']['Value']} percentage: {k['Row']['Black']['Percentage']:<25}",
+                    f"value: {k['Row']['AmericanIndian']['Value']} percentage: {k['Row']['AmericanIndian']['Percentage']:<25}",
+                    f"value: {k['Row']['Asian']['Value']} percentage: {k['Row']['Asian']['Percentage']:<25}",
+                    f"value: {k['Row']['PacificIslander']['Value']} percentage: {k['Row']['PacificIslander']['Percentage']:<25}",
+                    f"value: {k['Row']['Other']['Value']} percentage: {k['Row']['Other']['Percentage']:<25}",
+                    f"value: {k['Row']['Hispanic']['Value']} percentage: {k['Row']['Hispanic']['Percentage']:<25}",
+                ]
+            ) for k in json_decode["Targets"]
+        ]
+    ]
 
-# test_multiples_table_obj = {
-#     "latestPubYear": "2021",
-#     "EBIT/Revenue": {
-#         "2007": 10.255181230975822,
-#         "2008": 11.232272598187462,
-#         "2009": 12.908739618557536,
-#         "2010": 13.43318791152652,
-#         "2011": 14.897759141396612,
-#         "2012": 20.130363739480163,
-#         "2013": 20.024473899498854,
-#         "2014": 20.045942031838432,
-#         "2015": 23.127274130081883,
-#         "2016": 23.57577153124632,
-#         "2017": 23.62128780176576,
-#         "2018": 24.982562821040126,
-#         "2019": 25.048396687027648,
-#         "2020": 24.656230087022823,
-#         "2021": 21.499992127359626,
-#         "3-Year": 23.7348729671367,
-#         "5-Year": 23.961693904843198,
-#         "10-Year": 22.671229485636164
-#     },
-#     "EBITDA/Revenue": {
-#         "2007": 15.1282825876773,
-#         "2008": 15.618977942369872,
-#         "2009": 16.91601223808106,
-#         "2010": 17.722778827709337,
-#         "2011": 19.03084606687896,
-#         "2012": 23.983988921398513,
-#         "2013": 23.771189414276098,
-#         "2014": 23.625858042353755,
-#         "2015": 26.824720651583867,
-#         "2016": 27.43775378595352,
-#         "2017": 27.220461713484383,
-#         "2018": 28.310207655958695,
-#         "2019": 28.3949686148263,
-#         "2020": 41.11663987390589,
-#         "2021": 36.80257239733089,
-#         "3-Year": 35.43806029535436,
-#         "5-Year": 32.36897005110123,
-#         "10-Year": 28.74883610710719
-#     },
-#     "Leverage Ratio": {
-#         "2007": 4.432760164798806,
-#         "2008": 3.997989422495005,
-#         "2009": 3.5191550545743215,
-#         "2010": 3.7569432882541225,
-#         "2011": 3.1350568759627304,
-#         "2012": 2.4531859332001194,
-#         "2013": 2.650101376035598,
-#         "2014": 2.644299969582721,
-#         "2015": 2.249660623025392,
-#         "2016": 2.093554583053665,
-#         "2017": 2.6013561697902605,
-#         "2018": 2.423443623258813,
-#         "2019": 2.62036750598746,
-#         "2020": 1.831380588887279,
-#         "2021": 2.1434431107068908,
-#         "3-Year": 2.1983970685272096,
-#         "5-Year": 2.3239981997261405,
-#         "10-Year": 2.37107934835282
-#     },
-#     "parentInfo": None
-# }
-#
-# tbl = multiples_tbl_formatter(test_multiples_table_obj)
-# print(tbl)
-#
-# test_risk_table = {
-#     "overall": {
-#         "score": 4.99,
-#         "level": "Medium"
-#     },
-#     "growth": {
-#         "score": 6.16,
-#         "level": "High",
-#         "weight": 25
-#     },
-#     "sensitivity": {
-#         "score": 3.86,
-#         "level": "Low",
-#         "weight": 50
-#     },
-#     "structural": {
-#         "score": 6.09,
-#         "level": "High",
-#         "weight": 25
-#     }
-# }
-#
-# tbl = risk_tbl_formatter(test_risk_table)
-# print(tbl)
+    table = "\n".join(rows)
+    return table 
 
+def pop_marital_status_formatter(obj):
+    json_decode = obj.get("PopulationByMaritalStatus", "")
+    component = ["Year","Total","Divorced", "Married", "NeverMarried", "Separated",  "Widowed"]
+    rows = [
+        f" {'Name':<18}"+"   ".join(["  ", *[f"{i:<23}" for i in component]]),
+        *[
+            "   ".join(
+                [
+                    f"{k.get('Name','').split(':')[-1]:<20}",
+                    f"{k['Row']['Year']:<22}",
+                    f"{k['Row']['Total']:<20}",
+                    f"{k['Row']['Divorced']:<25}",
+                    f"{k['Row']['Married']:<25}",
+                    f"{k['Row']['NeverMarried']:<22}",
+                    f"{k['Row']['Separated']:<22}",
+                    f"{k['Row']['Widowed']:<35}"
+                ]
+            ) for k in json_decode["Targets"]
+        ]
+    ]
 
-# test_barriers_to_entry = {
-#     "Competition": "high",
-#     "Concentration": "low",
-#     "Life Cycle Stage": "mature",
-#     "Capital Intensity": "low",
-#     "Technology Change": "medium",
-#     "Regulation & Policy": "medium",
-#     "Industry Assistance": "low"
-# }
-#
-# result = barriers_to_entry_formatter(test_barriers_to_entry)
-# print(result)
+    table = "\n".join(rows)
+    return table
+
+def pop_relship_hh_formatter(obj):
+    json_decode = obj.get("PopulationByRelationshipAndHousehold", "")
+    component = ["Year","Total","MarriedCoupleFamily", "CohabitingCoupleHousehold", "MaleHouseholderNoSpousePartnerPresent", "FemaleHouseholderNoSpousePartnerPresent"]
+    rows = [
+        f" {'Name':<18}"+"   ".join(["  ", *[f"{i:<22}" for i in component]]),
+        *[
+            "   ".join(
+                [
+                    f"{k.get('Name','').split(':')[-1]:<20}",
+                    f"{k['Row']['Year']:<22}",
+                    f"{k['Row']['Total']:<23}",
+                    f"{k['Row']['MarriedCoupleFamily']:<23}",
+                    f"{k['Row']['CohabitingCoupleHousehold']:<30}",
+                    f"{k['Row']['MaleHouseholderNoSpousePartnerPresent']:<32}",
+                    f"{k['Row']['FemaleHouseholderNoSpousePartnerPresent']}",
+                ]
+            ) for k in json_decode["Targets"]
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+def pop_gender_formatter(obj):
+    json_decode = obj.get("PopulationByGender","")
+
+    component = ["Year","Total","Male","Female"]
+    rows = [
+        f" {'Name':<18}"+"   ".join(["  ", *[f"{i:<22}" for i in component]]),
+        *[
+            "   ".join(
+                [
+                    f"{k.get('Name','').split(':')[-1]:<20}",
+                    f"{k['Row']['Year']:<22}",
+                    f"{k['Row']['Total']:<23}",
+                    f"{k['Row']['Male']:<23}",
+                    f"{k['Row']['Female']:<30}",
+                ]
+            ) for k in json_decode["Targets"]
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+def pop_edu_attainment_formatter(obj):
+    json_decode = obj.get("PopulationByEducationalAttainmentStatus","")
+
+    component = ["Year","Total","<9th", "9-12th", "HighSchool", "AttendedCollege","AssociateDegree","BachelorsDegree","GraduateProfessionalDegree"]
+    rows = [
+        f" {'Name':<18}"+"   ".join(["  ", *[f"{i:<22}" for i in component]]),
+        *[
+            "   ".join(
+                [
+                    f"{k.get('Name','').split(':')[-1]:<20}",
+                    f"{k['Row']['Year']:<22}",
+                    f"{k['Row']['Total']:<23}",
+                    f"{k['Row']['<9th']:<23}",
+                    f"{k['Row']['9-12th']:<20}",
+                    f"{k['Row']['HighSchool']:<20}",
+                    f"{k['Row']['AttendedCollege']:<25}",
+                    f"{k['Row']['AssociateDegree']:<23}",
+                    f"{k['Row']['BachelorsDegree']:<23}",
+                    f"{k['Row']['GraduateProfessionalDegree']}",
+                ]
+            ) for k in json_decode["Targets"]
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+def demographic_overview_formatter(obj):
+    json_decode = obj.get("DemographicOverview","")
+
+    component = ["population","popGrowthRate","households", "hhGrowthRate", "unemploymentRate", "perCapitaPersonalIncome"]
+    cities = ["99503","95917","95914","95901","95969"]
+    rows = [
+        f"{'Name':15}"+"   ".join(["  ", *[f"{i:<21}" for i in component]]),
+        *[
+            "".join([
+                " ".join([f"{c:<22}"]),
+                " ".join([f"{json_decode[c]['population']:<23}"]),
+                " ".join([f"{json_decode[c]['popGrowthRate']:<24}"]),
+                " ".join([f"{json_decode[c]['households']:<25}"]),
+                " ".join([f"{json_decode[c]['hhGrowthRate']:<25}"]),
+                " ".join([f"{json_decode[c]['unemploymentRate']:<25}"]),
+                " ".join([f"{json_decode[c]['perCapitaPersonalIncome']}"]),
+        ])for c in cities
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
