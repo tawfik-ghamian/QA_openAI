@@ -22,7 +22,7 @@ system_msg_prompt = SystemMessage(content="You are a helpful assistant that can 
 human_prompts_and_parsers_and_headings = [
     (
         PromptTemplate(
-            template="What is the definition of the {industry_title} industry in US ?",
+            template="What is the definition of the {industry_title} industry?",
             input_variables=["industry_title"]
         ),
         None,
@@ -38,22 +38,35 @@ human_prompts_and_parsers_and_headings = [
     ),
     (
         PromptTemplate(
-            template="Where are the majority of businesses in the {industry_title} industry in US?"
-                     "\n{format_instructions}",
-            input_variables=["industry_title"],
-            partial_variables={"format_instructions": output_parser.get_format_instructions()}
+            template="What is the wearable technology industry {industry_title}?",
+            input_variables=["industry_title"]
         ),
-        output_parser,
-        "Locations of main businesses globally"
+        None,
+        "Current state"
     ),
     (
         PromptTemplate(
-            template="Who is the target customer base for the {industry_title} industry in US?\n{format_instructions}",
-            input_variables=["industry_title"],
-            partial_variables={"format_instructions": output_parser.get_format_instructions()}
+            template="Who are the main players in {industry_title} industry and what is the market share of each one of these players?",
+            input_variables=["industry_title"]
         ),
-        output_parser,
-        "Target Customers"
+        None,
+        "Main Players"
+    ),
+    (
+        PromptTemplate(
+            template="What is the state of the competition in the {industry_title} industry?",
+            input_variables=["industry_title"]
+        ),
+        None,
+        "Competition intensity"
+    ),
+    (
+        PromptTemplate(
+            template="Analyze Porter's 5 forces for this {industry_title} industry ?",
+            input_variables=["industry_title"]
+        ),
+        None,
+        "Porter's Five forces"
     ),
     (
         PromptTemplate(
@@ -83,11 +96,11 @@ human_prompts_and_parsers_and_headings = [
     ),
     (
         PromptTemplate(
-            template="What are the key financial indicators of the {industry_title} industry in US?",
+            template="What are the list of key financial indicators of the {industry_title} industry in US?",
             input_variables=["industry_title"]
         ),
         None,
-        "Key financial indicators"
+        "Key metrics to track"
     ),
     (
         PromptTemplate(
@@ -156,9 +169,11 @@ MULTIPLES_TBL_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
-            template="Examine the provided multiples table, which offers a comprehensive overview of key valuation "
-                     "multiples pertinent to a specific industry. "
+            template=
+            # "Examine the provided multiples table, which offers a comprehensive overview of key valuation "
+                    #  "multiples pertinent to a specific industry. "
                      "write a bullet points summary about it and present key values. "
+                     "please do not get any thing from outside the values I gave it to you"
                      "\n\n>>>\n{multiples_table}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["multiples_table"]
         )
@@ -166,31 +181,74 @@ MULTIPLES_TBL_PROMPT = ChatPromptTemplate.from_messages([
 ])
 
 
-RISK_TBL_PROMPT = ChatPromptTemplate.from_messages([
+# RISK_TBL_PROMPT = ChatPromptTemplate.from_messages([
+#     system_msg_prompt,
+#     HumanMessagePromptTemplate(
+#         prompt=PromptTemplate(
+#             template="Analyze the presented table showcasing the risk components associated with a specific industry. "
+#                      "for each analysis present a summary key insights and values in one connected paragrph . "
+#                      "\n\n>>>\n{risk_table}\n<<<\n\nYOUR RESPONSE:",
+#             input_variables=["risk_table"]
+#         )
+#     )
+# ])
+
+SUPPLY_DEMAND_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
-            template="Analyze the presented table showcasing the risk components associated with a specific industry. "
-                     "for each analysis present a summary key insights and values in one connected paragrph . "
-                     "\n\n>>>\n{risk_table}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["risk_table"]
-        )
+            template="What is the supply and demand for wearable technologies?",
+            input_variables=[]
+        ),
     )
 ])
 
+MARKET_SIZE_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template="What is the size of the wearable technology market?",
+            input_variables=[]
+        ),
+    )
+])
+
+MARKET_GEO_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template="Where in the US wearable technologies mostly sold?",
+            input_variables=[]
+        ),
+    )
+])
 
 BARRIERS_TO_ENTRY_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Examine the dataset and compile a checklist of industry-specific entry barriers. "
-            "Provide a bullet-point summary highlighting crucial insights and value ."
+            "Help me understand the barriers to entry for {industry} using this data."
+            # "Examine the dataset and compile a checklist of industry-specific entry barriers. "
+            # "Provide a bullet-point summary highlighting crucial insights and value ."
             "\n\n>>>\n{barriers_to_entry}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["barriers_to_entry"]
+            input_variables=["industry","barriers_to_entry"]
         )
     )
 ])
+
+TARGET_CUSTOMER_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template="What is the size of target customers for wearable technologies? "
+            "What is the size of health and fitness enthusiasts?",
+            input_variables=[]
+        ),
+    )
+])
+
+# ////////////////////////  first file for editing  //////////////
 
 MAIN_ACTIVITY_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
@@ -395,3 +453,148 @@ DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
         )
     )
 ])
+
+HH_SIZE_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+CIVIL_POP_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+HH_INCOME_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+GENERAL_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Given a JSON schema representing your data, please provide a summary of the key insights and trends that can be derived from this data. Highlight any important data points, patterns, or relationships that are significant. Feel free to include relevant statistics or observations to make the summary as informative as possible."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+

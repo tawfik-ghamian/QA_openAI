@@ -9,21 +9,21 @@ def multiples_tbl_formatter(multiples_table_obj):
     return table
 
 
-def risk_tbl_formatter(risk_table_obj):
-    components = ["structural", "growth", "sensitivity", "overall"]
-    rows = [
-        "  ".join([f"{h:<16}" for h in ("Risk component", "Level", "Weight", "Score")]),
-        *[
-            "  ".join([
-                f'{c.title() + " Risk":<16}',
-                f'{risk_table_obj[c].get("level", ""):<16}',
-                f'{risk_table_obj[c].get("weight", ""):<16}',
-                f'{risk_table_obj[c].get("score", ""):<16}',
-            ]) for c in components
-        ]
-    ]
-    table = "\n".join(rows)
-    return table
+# def risk_tbl_formatter(risk_table_obj):
+#     components = ["structural", "growth", "sensitivity", "overall"]
+#     rows = [
+#         "  ".join([f"{h:<16}" for h in ("Risk component", "Level", "Weight", "Score")]),
+#         *[
+#             "  ".join([
+#                 f'{c.title() + " Risk":<16}',
+#                 f'{risk_table_obj[c].get("level", ""):<16}',
+#                 f'{risk_table_obj[c].get("weight", ""):<16}',
+#                 f'{risk_table_obj[c].get("score", ""):<16}',
+#             ]) for c in components
+#         ]
+#     ]
+#     table = "\n".join(rows)
+#     return table
 
 
 def barriers_to_entry_formatter(barriers_to_entry_obj):
@@ -287,6 +287,104 @@ def demographic_overview_formatter(obj):
         ]
     ]
 
+    table = "\n".join(rows)
+    return table
+
+def hh_size_formatter(obj):
+    jsondecoded = obj.get("HouseholdsBySize","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+
+    rows = [
+        "".join([f"{c:<15}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<15}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component)
+            ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+def civil_pop_formatter(obj):
+    jsondecoded = obj.get("CivilianPopulation","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<29}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<40}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name")
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
+    table = "\n".join(rows)
+
+    return table
+
+def hh_income_formatter(obj):
+    jsondecoded = obj.get("HouseholdIncome","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name"),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
+    table = "\n".join(rows)
+    return table
+
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
+    table = "\n".join(rows)
+    return table
+
+def formatter():
+    rows = []
     table = "\n".join(rows)
     return table
 
