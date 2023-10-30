@@ -197,8 +197,8 @@ SUPPLY_DEMAND_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
-            template="What is the supply and demand for wearable technologies?",
-            input_variables=[]
+            template="What is the supply and demand for wearable technologies?\n\n{obj}\n\n",
+            input_variables=["obj"]
         ),
     )
 ])
@@ -207,8 +207,8 @@ MARKET_SIZE_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
-            template="What is the size of the wearable technology market?",
-            input_variables=[]
+            template="What is the size of the wearable technology market?\n\n{obj}\n\n",
+            input_variables=["obj"]
         ),
     )
 ])
@@ -217,8 +217,8 @@ MARKET_GEO_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
-            template="Where in the US wearable technologies mostly sold?",
-            input_variables=[]
+            template="Where in the US wearable technologies mostly sold?\n\n{obj}\n\n",
+            input_variables=["obj"]
         ),
     )
 ])
@@ -242,8 +242,9 @@ TARGET_CUSTOMER_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template="What is the size of target customers for wearable technologies? "
-            "What is the size of health and fitness enthusiasts?",
-            input_variables=[]
+            "What is the size of health and fitness enthusiasts?"
+            "\n\n{obj}\n\n",
+            input_variables=["obj"]
         ),
     )
 ])
