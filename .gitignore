@@ -3,3 +3,4 @@
 .streamlit
 _pycache_
 .devcontainer
+.gitignore
