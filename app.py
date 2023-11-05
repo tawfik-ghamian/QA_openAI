@@ -10,12 +10,9 @@ from langchain.callbacks import get_openai_callback
 from dotenv import load_dotenv
 
 from prompts import (PROMPTS, OUTPUT_PARSERS, HEADINGS,
-                     MULTIPLES_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, 
-                     MAIN_ACTIVITY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAER_PROMPT, 
-                     DEFINITION_PROMPT, REVENUE_CARD_PROMPT, PROFIT_CARD_PROMPT, PROFIT_MARGIN_CARD_PROMPT, ENTERPRISES_CARD_PROMPT,
+                     MULTIPLES_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAYER_PROMPT,
                      POP_RACE_ETHN_PROMPT,POP_EDU_ATTAINMENT_PROMPT,POP_RELSHIP_HH_PROMPT,POP_MATERIAL_PROMPT,POP_GENDER_PROMPT,
-                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,SUPPLY_DEMAND_PROMPT,MARKET_SIZE_PROMPT,
-                     MARKET_GEO_PROMPT,TARGET_CUSTOMER_PROMPT)
+                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,)
 from chains import get_chains_results, get_chain_result
 from gpt_params import MODELS, MAX_TOKEN
 from enums import FN
@@ -59,7 +56,7 @@ st.set_page_config(page_title="Industry Info", page_icon=":robot_face:")
 # ** Configurations Sidebar **
 with st.sidebar:
     llm_model = MODELS[st.radio("Model", list(MODELS.keys()))]
-    temperature = st.slider("Temperature", min_value=0.0, max_value=2.0, step=0.1, value=0.0)
+    temperature = st.slider("Temperature", min_value=0.0, max_value=2.0, step=0.1, value=1.0)
     max_tokens = st.slider("Max Tokens", min_value=1, max_value=MAX_TOKEN[llm_model], step=1, value=2000)
 
 # Large Language Model (LLM)
@@ -68,16 +65,11 @@ llm = ChatOpenAI(model=llm_model, temperature=temperature, max_tokens=max_tokens
 # Chains
 CHAINS = [LLMChain(llm=llm, prompt=prompt, verbose=False) for prompt in PROMPTS]
 MULTIPLE_TBL_CHAIN = LLMChain(llm=llm, prompt=MULTIPLES_TBL_PROMPT, verbose=True)
-# RISK_TBL_CHAIN = LLMChain(llm=llm, prompt=RISK_TBL_PROMPT, verbose=True)
 BARRIERS_TO_ENTRY_CHAIN = LLMChain(llm=llm, prompt=BARRIERS_TO_ENTRY_PROMPT, verbose=True)
-MAIN_ACTIVITY_CHAIN = LLMChain(llm=llm, prompt=MAIN_ACTIVITY_PROMPT, verbose=True)
 PRODUCT_CHAIN = LLMChain(llm=llm, prompt=PRODUCT_PROMPT, verbose=True)
-MAJOR_PLAYER_CHAIN = LLMChain(llm=llm, prompt=MAJOR_PLAER_PROMPT, verbose=True)
-DEFINITION_CHAIN = LLMChain(llm=llm, prompt=DEFINITION_PROMPT, verbose=True)
-REVENUE_CARD_CHAIN = LLMChain(llm=llm, prompt=REVENUE_CARD_PROMPT, verbose=True)
-PROFIT_CARD_CHAIN = LLMChain(llm=llm, prompt=PROFIT_CARD_PROMPT, verbose=True)
-PROFIT_MARGIN_CARD_CHAIN = LLMChain(llm=llm, prompt=PROFIT_MARGIN_CARD_PROMPT, verbose=True)
-ENTERPRISES_CARD_CHAIN = LLMChain(llm=llm, prompt=ENTERPRISES_CARD_PROMPT, verbose=True)
+MAJOR_PLAYER_CHAIN = LLMChain(llm=llm, prompt=MAJOR_PLAYER_PROMPT, verbose=True)
+
+
 POP_RACE_ETHN_CHAIN = LLMChain(llm=llm, prompt=POP_RACE_ETHN_PROMPT, verbose=True)
 POP_MATERIAL_CHAIN = LLMChain(llm=llm, prompt=POP_MATERIAL_PROMPT, verbose=True)
 POP_RELSHIP_HH_CHAIN = LLMChain(llm=llm, prompt=POP_RELSHIP_HH_PROMPT, verbose=True)
@@ -88,14 +80,6 @@ HH_SIZE_CHAIN = LLMChain(llm=llm, prompt=HH_SIZE_PROMPT, verbose=True)
 CIVIL_POP_CHAIN = LLMChain(llm=llm, prompt=CIVIL_POP_PROMPT, verbose=True)
 HH_INCOME_CHAIN = LLMChain(llm=llm, prompt=HH_INCOME_PROMPT, verbose=True)
 GENERAL_CHAIN = LLMChain(llm=llm, prompt=GENERAL_PROMPT, verbose=True)
-SUPPLY_DEMAND_CHAIN = LLMChain(llm=llm, prompt=SUPPLY_DEMAND_PROMPT, verbose=True)
-MARKET_SIZE_CHAIN = LLMChain(llm=llm, prompt=MARKET_SIZE_PROMPT, verbose=True)
-MARKET_GEO_CHAIN = LLMChain(llm=llm, prompt=MARKET_GEO_PROMPT, verbose=True)
-TARGET_CUSTOMER_CHAIN = LLMChain(llm=llm, prompt=TARGET_CUSTOMER_PROMPT, verbose=True)
-DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMPT, verbose=True)
-DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMPT, verbose=True)
-DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMPT, verbose=True)
-DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMPT, verbose=True)
 
 # ** Main **
 st.header("Powered by :robot_face:")
@@ -149,7 +133,7 @@ if selected_fn == FN.FN2.value:
     if input_text:
 
         result, exec_time, tkn_cb = get_chain_execution_result(MULTIPLE_TBL_CHAIN, {
-            "multiples_table": to_formatted_string(input_text, formatters.multiples_tbl_formatter)})
+            "multiples_table": input_text})
 
         st.markdown(f"#### Here are your results")
 
@@ -158,33 +142,18 @@ if selected_fn == FN.FN2.value:
         with st.expander("##### Explanation"):
             st.markdown(result)
 
-# == Function 3 ==
-# if selected_fn == FN.FN3.value:
-
-#     st.markdown("Function 3: The AI will explain the entered risk table of an industry")
-
-#     input_text = st.text_area(
-#         label="Risk Table",
-#         placeholder="Enter a risk table object",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-
-#         result, exec_time, tkn_cb = get_chain_execution_result(RISK_TBL_CHAIN, {
-#             "risk_table": to_formatted_string(input_text, formatters.risk_tbl_formatter)})
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
 
 # == Function 4 ==
 if selected_fn == FN.FN4.value:
 
     st.markdown("Function 4: The AI will explain the entered barriers to entry checklist of an industry")
+    
+    industry_title = st.text_input(
+        label="Industry Title",
+        placeholder="Enter an industry title e.g. HR Consulting",
+        max_chars=25,
+        label_visibility="collapsed"
+    )
 
     input_text = st.text_area(
         label="Barriers To Entry Checklist",
@@ -192,41 +161,13 @@ if selected_fn == FN.FN4.value:
         label_visibility="collapsed"
     )
 
-    industry = st.text_area(
-        label="Barriers To Entry Checklist",
-        placeholder="Enter a barriers to entry checklist object",
-        label_visibility="collapsed"
-    )
 
-    if input_text:
+    if input_text and industry_title :
 
         result, exec_time, tkn_cb = get_chain_execution_result(BARRIERS_TO_ENTRY_CHAIN, {
-            "barriers_to_entry": to_formatted_string(input_text, formatters.barriers_to_entry_formatter),
-            "industry": industry
+            "barriers_to_entry": input_text,
+            "industry_title": industry_title
             })
-
-        st.markdown(f"#### Here are your results")
-
-        show_chain_execution_info(exec_time, tkn_cb)
-
-        with st.expander("##### Explanation"):
-            st.markdown(result)
-
-# == Function 5 ==
-if selected_fn == FN.FN5.value:
-
-    st.markdown("Function 5: The AI will explain the entered Main Activity of an industry")
-
-    input_text = st.text_area(
-        label="Main Activity on an industry",
-        placeholder="Enter the main activity of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        result, exec_time, tkn_cb = get_chain_execution_result(MAIN_ACTIVITY_CHAIN, {
-            "main_activity": to_formatted_string(input_text, formatters.main_activity_formatter)})
 
         st.markdown(f"#### Here are your results")
 
@@ -240,16 +181,25 @@ if selected_fn == FN.FN6.value:
 
     st.markdown("Function 6: The AI will explain the entered Products and services of an industry")
 
+    industry_title = st.text_input(
+        label="Industry Title",
+        placeholder="Enter an industry title e.g. HR Consulting",
+        max_chars=25,
+        label_visibility="collapsed"
+    )
+    
     input_text = st.text_area(
         label="Products and Services of an industry",
         placeholder="Enter the products and services of an industry",
         label_visibility="collapsed"
     )
 
-    if input_text:
+    if input_text and industry_title:
 
         result, exec_time, tkn_cb = get_chain_execution_result(PRODUCT_CHAIN, {
-            "products_and_services": to_formatted_string(input_text, formatters.products_formatter)})
+            "products_and_services": input_text,
+            "industry_title": industry_title
+            })
 
         st.markdown(f"#### Here are your results")
 
@@ -272,7 +222,7 @@ if selected_fn == FN.FN7.value:
     if input_text:
 
         result, exec_time, tkn_cb = get_chain_execution_result(MAJOR_PLAER_PROMPT, {
-            "major_players": to_formatted_string(input_text, formatters.major_players_formatter)})
+            "major_players": input_text})
 
         st.markdown(f"#### Here are your results")
 
@@ -281,165 +231,9 @@ if selected_fn == FN.FN7.value:
         with st.expander("##### Explanation"):
             st.markdown(result)
 
-# == Function 8 ==
-if selected_fn == FN.FN8.value:
+#////////////////////////////////for here ////////////////////
 
-    st.markdown("Function 8: The AI will explain the entered definition of an industry and summarize it")
-
-    input_text = st.text_area(
-        label="Definition of an industry",
-        placeholder="Enter the Definition of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        result, exec_time, tkn_cb = get_chain_execution_result(DEFINITION_CHAIN, {
-            "definition": to_formatted_string(input_text, formatters.definition_formatter)})
-
-        st.markdown(f"#### Here are your results")
-
-        show_chain_execution_info(exec_time, tkn_cb)
-
-        with st.expander("##### Explanation"):
-            st.markdown(result)
-
-# == Function 9 ==
-if selected_fn == FN.FN9.value:
-
-    st.markdown("Function 9: The AI will explain the entered revenue growth chart of an industry")
-
-    industry_title = st.text_input(
-        label="Industry Title",
-        placeholder="Enter an industry title e.g. HR Consulting",
-        max_chars=100,
-        label_visibility="collapsed"
-    )
-
-    input_text = st.text_area(
-        label="Revenue growth chart values of an industry",
-        placeholder="Enter the growth values of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        if industry_title:
-        
-            result, exec_time, tkn_cb = get_chain_execution_result(REVENUE_CARD_CHAIN, {
-                "revenue_card": to_formatted_string(input_text, formatters.revenue_card_formatter),
-                "industry_title": industry_title
-                })
-
-            st.markdown(f"#### Here are your results")
-
-            show_chain_execution_info(exec_time, tkn_cb)
-
-            with st.expander("##### Explanation"):
-                st.markdown(result)
-
-# == Function 10 ==
-if selected_fn == FN.FN10.value:
-
-    st.markdown("Function 10: The AI will explain the entered profit growth chart of an industry")
-
-    industry_title = st.text_input(
-        label="Industry Title",
-        placeholder="Enter an industry title e.g. HR Consulting",
-        max_chars=100,
-        label_visibility="collapsed"
-    )
-
-    input_text = st.text_area(
-        label="Profit growth chart values of an industry",
-        placeholder="Enter the growth values of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        if industry_title:
-
-            result, exec_time, tkn_cb = get_chain_execution_result(PROFIT_CARD_CHAIN, {
-                "profit_card": to_formatted_string(input_text, formatters.profit_card_formatter),
-                "industry_title": industry_title
-                })
-
-            st.markdown(f"#### Here are your results")
-
-            show_chain_execution_info(exec_time, tkn_cb)
-
-            with st.expander("##### Explanation"):
-                st.markdown(result)
-
-# == Function 11 ==
-if selected_fn == FN.FN11.value:
-
-    st.markdown("Function 11: The AI will explain the entered profit margin growth chart of an industry")
-
-    industry_title = st.text_input(
-        label="Industry Title",
-        placeholder="Enter an industry title e.g. HR Consulting",
-        max_chars=100,
-        label_visibility="collapsed"
-    )
-
-    input_text = st.text_area(
-        label="Profit margin growth chart values of an industry",
-        placeholder="Enter the growth values of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        if industry_title:
-
-            result, exec_time, tkn_cb = get_chain_execution_result(PROFIT_MARGIN_CARD_CHAIN, {
-                "profit_margin_card": to_formatted_string(input_text, formatters.profit_margin_card_formatter),
-                "industry_title": industry_title
-                })
-
-            st.markdown(f"#### Here are your results")
-
-            show_chain_execution_info(exec_time, tkn_cb)
-
-            with st.expander("##### Explanation"):
-                st.markdown(result)
-
-# == Function 12 ==
-if selected_fn == FN.FN12.value:
-
-    st.markdown("Function 12: The AI will explain the entered enterprises growth chart of an industry")
-
-    industry_title = st.text_input(
-        label="Industry Title",
-        placeholder="Enter an industry title e.g. HR Consulting",
-        max_chars=100,
-        label_visibility="collapsed"
-    )
-
-    input_text = st.text_area(
-        label="Enterprises growth chart values of an industry",
-        placeholder="Enter the growth values of an industry",
-        label_visibility="collapsed"
-    )
-
-    if input_text:
-
-        if industry_title:
-
-            result, exec_time, tkn_cb = get_chain_execution_result(ENTERPRISES_CARD_CHAIN, {
-                "enterprises_card": to_formatted_string(input_text, formatters.enterprises_card_formatter),
-                "industry_title": industry_title
-                })
-
-            st.markdown(f"#### Here are your results")
-
-            show_chain_execution_info(exec_time, tkn_cb)
-
-            with st.expander("##### Explanation"):
-                st.markdown(result)
-
+#/////////////// Demographic ///////////////////
 
 # == Function 13 ==
 if selected_fn == FN.FN13.value:
@@ -678,207 +472,3 @@ if selected_fn == FN.FN22.value:
 
         with st.expander("##### Explanation"):
             st.markdown(result)
-
-# == Function 23 ==
-if selected_fn == FN.FN23.value:
-
-    st.markdown("Function 23: The AI will explain the state of supply and demand card chart of an industry")
-
-        
-    result, exec_time, tkn_cb = get_chain_execution_result(SUPPLY_DEMAND_CHAIN,{"obj": ""})
-
-    st.markdown(f"#### Here are your results")
-
-    show_chain_execution_info(exec_time, tkn_cb)
-
-    with st.expander("##### Explanation"):
-        st.markdown(result)
-
-# == Function 24 ==
-if selected_fn == FN.FN24.value:
-
-    st.markdown("Function 24: The AI will explain the Market Size card chart of an industry")
-
-    
-        
-    result, exec_time, tkn_cb = get_chain_execution_result(MARKET_SIZE_CHAIN,{"obj": ""})
-
-    st.markdown(f"#### Here are your results")
-
-    show_chain_execution_info(exec_time, tkn_cb)
-
-    with st.expander("##### Explanation"):
-        st.markdown(result)
-
-# == Function 25 ==
-if selected_fn == FN.FN25.value:
-
-    st.markdown("Function 25: The AI will explain the Market Geography card chart of an industry")
-
-        
-    result, exec_time, tkn_cb = get_chain_execution_result(MARKET_GEO_CHAIN,{"obj": ""})
-
-    st.markdown(f"#### Here are your results")
-
-    show_chain_execution_info(exec_time, tkn_cb)
-
-    with st.expander("##### Explanation"):
-        st.markdown(result)
-
-# == Function 26 ==
-if selected_fn == FN.FN26.value:
-
-    st.markdown("Function 26: The AI will explain the TARGET CUSTOMER card chart of an industry")
-        
-    result, exec_time, tkn_cb = get_chain_execution_result(TARGET_CUSTOMER_CHAIN,{"obj": ""})
-
-    st.markdown(f"#### Here are your results")
-
-    show_chain_execution_info(exec_time, tkn_cb)
-
-    with st.expander("##### Explanation"):
-        st.markdown(result)
-
-# # == Function 27 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 27: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
-# # == Function 28 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 28: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
-# # == Function 29 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 29: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
-# # == Function 30 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 30: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
-# # == Function 31 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 31: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
-# # == Function 32 ==
-# if selected_fn == FN.FN18.value:
-
-#     st.markdown("Function 32: The AI will explain the entered demographic overview card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-#             "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
-#             })
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)

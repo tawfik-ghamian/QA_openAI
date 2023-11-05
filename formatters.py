@@ -8,24 +8,6 @@ def multiples_tbl_formatter(multiples_table_obj):
     table = "\n".join(rows)
     return table
 
-
-# def risk_tbl_formatter(risk_table_obj):
-#     components = ["structural", "growth", "sensitivity", "overall"]
-#     rows = [
-#         "  ".join([f"{h:<16}" for h in ("Risk component", "Level", "Weight", "Score")]),
-#         *[
-#             "  ".join([
-#                 f'{c.title() + " Risk":<16}',
-#                 f'{risk_table_obj[c].get("level", ""):<16}',
-#                 f'{risk_table_obj[c].get("weight", ""):<16}',
-#                 f'{risk_table_obj[c].get("score", ""):<16}',
-#             ]) for c in components
-#         ]
-#     ]
-#     table = "\n".join(rows)
-#     return table
-
-
 def barriers_to_entry_formatter(barriers_to_entry_obj):
     return "\n".join([f"{k + ':':<22} {v.title()}" for k, v in barriers_to_entry_obj.items()])
 
@@ -343,52 +325,120 @@ def hh_income_formatter(obj):
     return table
 
 
-def formatter():
-    rows = []
+def hh_summary_forecast_formatter():
+    jsondecoded = obj.get("HouseholdSummary","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name"),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
+def languagesSpoken_forecast_formatter():
+    jsondecoded = obj.get("LanguagesSpoken","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name"),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
+def personalIncomeSummary_forecast_formatter():
+    jsondecoded = obj.get("PersonalIncomeSummary","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name" or c != "PersonalIncome"),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
+def hh_summary_forecast_formatter():
+    jsondecoded = obj.get("HouseholdSummary","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name"),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
+def populationByAge_forecast_formatter():
+    jsondecoded = obj.get("PopulationByAge","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    forecast = ["MedianAge","Year"]
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join([
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"{j['Forecast']['Row'][f]:<23}" for f in forecast),
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
+def pop_summary_forecast_formatter():
+    jsondecoded = json100.get("PopulationSummary","")
+    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
+    rows = [
+        "".join([f"{c:<30}" for c in component ]),
+        *[
+            "".join(
+                [
+                "".join(f"{j['Name'].split(':')[-1]:<30}"),
+                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
+                "".join("\nForcast                       "),
+                "".join(f"Growth: {j['Forecast']['Growth']}"),
+                *[
+                    "".join(
+                    [
+                        "".join(f"{f[c]:<23}" for c in component if c != "Name"),
+                    ]
+                ) for f in j['Forecast']['Rows']
+                ]
+        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
+        ]
+    ]
+
     table = "\n".join(rows)
     return table
 
-def formatter():
-    rows = []
-    table = "\n".join(rows)
-    return table
-
-def formatter():
-    rows = []
-    table = "\n".join(rows)
-    return table
-
-def formatter():
-    rows = []
-    table = "\n".join(rows)
-    return table
-
-def formatter():
-    rows = []
-    table = "\n".join(rows)
-    return table
