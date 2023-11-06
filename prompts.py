@@ -470,28 +470,28 @@ CONSUMER_SPEND_INFO_PROMPT = ChatPromptTemplate.from_messages([
     )
 ])
 
-# IND_PERFORM_PROMPT = ChatPromptTemplate.from_messages([
-#     system_msg_prompt,
-#     HumanMessagePromptTemplate(
-#         prompt=PromptTemplate(
-#             template=
-#             "Please perform  the graph and provide a summary of its key insights."
-#             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-#             input_variables=["obj"]
-#         )
-#     )
-# ])
+IND_PERFORM_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please perform  the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
 
-# IND_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
-#     system_msg_prompt,
-#     HumanMessagePromptTemplate(
-#         prompt=PromptTemplate(
-#             template=
-#             "Please perform  the graph and provide a summary of its key insights."
-#             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-#             input_variables=["obj"]
-#         )
-#     )
-# ])
+IND_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please perform  the graph and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
 
 

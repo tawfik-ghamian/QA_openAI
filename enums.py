@@ -34,6 +34,6 @@ class FN(Enum):
     FN27 = "Function 27: Language Spoken Card Explanation"
     FN28 = "Function 28: Civilian Employee population Industry Card Explanation"
     FN29 = "Function 29: Consumer Spend Information Card Explanation"
-    # FN30 = "Function 30: Consumer Spend Information Card Explanation"
-    # FN31 = "Function 31: Consumer Spend Information Card Explanation"
+    FN30 = "Function 30: Industry Perform Card Explanation"
+    FN31 = "Function 31: Industry Summary Card Explanation"
 

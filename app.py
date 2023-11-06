@@ -13,7 +13,8 @@ from prompts import (PROMPTS, OUTPUT_PARSERS, HEADINGS,
                      MULTIPLES_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAYER_PROMPT,
                      POP_RACE_ETHN_PROMPT,POP_EDU_ATTAINMENT_PROMPT,POP_RELSHIP_HH_PROMPT,POP_MATERIAL_PROMPT,POP_GENDER_PROMPT,
                      DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,LANGUAGE_SPOKEN_PROMPT,
-                     PERSONAL_INCOME_SUMMARY_PROMPT,HH_SUMMARY_PROMPT,POP_AGE_SUMMARY_PROMPT,POP_SUMMARY_PROMPT)
+                     PERSONAL_INCOME_SUMMARY_PROMPT,HH_SUMMARY_PROMPT,POP_AGE_SUMMARY_PROMPT,POP_SUMMARY_PROMPT,CIVI_EMP_POP_IND_PROMPT,
+                     CONSUMER_SPEND_INFO_PROMPT,IND_PERFORM_PROMPT,IND_SUMMARY_PROMPT)
 from chains import get_chains_results, get_chain_result
 from gpt_params import MODELS, MAX_TOKEN
 from enums import FN
@@ -86,9 +87,10 @@ HH_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=HH_SUMMARY_PROMPT, verbose=True)
 POP_AGE_CHAIN = LLMChain(llm=llm, prompt=POP_AGE_SUMMARY_PROMPT, verbose=True)
 PERSONAL_INCOME_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=PERSONAL_INCOME_SUMMARY_PROMPT, verbose=True)
 LANGUAGE_SPOKEN_CHAIN = LLMChain(llm=llm, prompt=LANGUAGE_SPOKEN_PROMPT, verbose=True)
-# CIVI_EMP_POP_IND_CHAIN = LLMChain(llm=llm, prompt=CIVI_EMP_POP_IND_PROMPT, verbose=True)
-# CONSUMER_SPEND_INFO_CHAIN = LLMChain(llm=llm, prompt=CONSUMER_SPEND_INFO_PROMPT, verbose=True)
-
+CIVI_EMP_POP_IND_CHAIN = LLMChain(llm=llm, prompt=CIVI_EMP_POP_IND_PROMPT, verbose=True)
+CONSUMER_SPEND_INFO_CHAIN = LLMChain(llm=llm, prompt=CONSUMER_SPEND_INFO_PROMPT, verbose=True)
+IND_PERFORM_CHAIN = LLMChain(llm=llm, prompt=IND_PERFORM_PROMPT, verbose=True)
+IND_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=IND_SUMMARY_PROMPT, verbose=True)
 
 # ** Main **
 st.header("Powered by :robot_face:")
@@ -231,7 +233,7 @@ if selected_fn == FN.FN7.value:
     if input_text:
 
         result, exec_time, tkn_cb = get_chain_execution_result(MAJOR_PLAYER_CHAIN, {
-            "major_players": input_text})
+            "major_players": input_text,})
 
         st.markdown(f"#### Here are your results")
 
@@ -628,6 +630,50 @@ if selected_fn == FN.FN29.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(CONSUMER_SPEND_INFO_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 30 ==
+if selected_fn == FN.FN30.value:
+
+    st.markdown("Function 30: The AI will explain the entered Industry Perform card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(IND_PERFORM_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 31 ==
+if selected_fn == FN.FN31.value:
+
+    st.markdown("Function 31: The AI will explain the entered Consumer Spend Information card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(IND_SUMMARY_CHAIN, {"obj": input_text})
 
         st.markdown(f"#### Here are your results")
 
