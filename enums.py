@@ -27,4 +27,13 @@ class FN(Enum):
     FN20 = "Function 20: civilian population Figure Card Explanation"
     FN21 = "Function 21: HouseHolde Income Figure Card Explanation"
     FN22 = "Function 22: General Figure Card Explanation"
+    FN23 = "Function 23: Population Summary Card Explanation"
+    FN24 = "Function 24: Population by Age Summary Card Explanation"
+    FN25 = "Function 25: House Hold Summary Card Explanation"
+    FN26 = "Function 26: Personal Income Summary Card Explanation"
+    FN27 = "Function 27: Language Spoken Card Explanation"
+    FN28 = "Function 28: Civilian Employee population Industry Card Explanation"
+    FN29 = "Function 29: Consumer Spend Information Card Explanation"
+    # FN30 = "Function 30: Consumer Spend Information Card Explanation"
+    # FN31 = "Function 31: Consumer Spend Information Card Explanation"
 

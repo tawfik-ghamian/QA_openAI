@@ -324,26 +324,7 @@ def hh_income_formatter(obj):
     table = "\n".join(rows)
     return table
 
-
-def hh_summary_forecast_formatter():
-    jsondecoded = obj.get("HouseholdSummary","")
-    component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
-    rows = [
-        "".join([f"{c:<30}" for c in component ]),
-        *[
-            "".join([
-                "".join(f"{j['Name'].split(':')[-1]:<30}"),
-                "".join(f"{j['Row'][c]:<23}" for c in component if c != "Name"),
-                "".join("\nForcast                       "),
-                "".join(f"{j['Forecast']['Row'][c]:<23}" for c in component if c != "Name"),
-        ])for j in jsondecoded['Targets'] if j['Name'].split(' ')[-1] !="All"
-        ]
-    ]
-
-    table = "\n".join(rows)
-    return table
-
-def languagesSpoken_forecast_formatter():
+def languagesSpoken_forecast_formatter(obj):
     jsondecoded = obj.get("LanguagesSpoken","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     rows = [
@@ -361,7 +342,7 @@ def languagesSpoken_forecast_formatter():
     table = "\n".join(rows)
     return table
 
-def personalIncomeSummary_forecast_formatter():
+def personalIncomeSummary_forecast_formatter(obj):
     jsondecoded = obj.get("PersonalIncomeSummary","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     rows = [
@@ -379,7 +360,7 @@ def personalIncomeSummary_forecast_formatter():
     table = "\n".join(rows)
     return table
 
-def hh_summary_forecast_formatter():
+def hh_summary_forecast_formatter(obj):
     jsondecoded = obj.get("HouseholdSummary","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     rows = [
@@ -397,7 +378,7 @@ def hh_summary_forecast_formatter():
     table = "\n".join(rows)
     return table
 
-def populationByAge_forecast_formatter():
+def populationByAge_forecast_formatter(obj):
     jsondecoded = obj.get("PopulationByAge","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     forecast = ["MedianAge","Year"]
@@ -416,7 +397,7 @@ def populationByAge_forecast_formatter():
     table = "\n".join(rows)
     return table
 
-def pop_summary_forecast_formatter():
+def pop_summary_forecast_formatter(obj):
     jsondecoded = json100.get("PopulationSummary","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     rows = [

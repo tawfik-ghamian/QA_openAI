@@ -12,7 +12,8 @@ from dotenv import load_dotenv
 from prompts import (PROMPTS, OUTPUT_PARSERS, HEADINGS,
                      MULTIPLES_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAYER_PROMPT,
                      POP_RACE_ETHN_PROMPT,POP_EDU_ATTAINMENT_PROMPT,POP_RELSHIP_HH_PROMPT,POP_MATERIAL_PROMPT,POP_GENDER_PROMPT,
-                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,)
+                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,LANGUAGE_SPOKEN_PROMPT,
+                     PERSONAL_INCOME_SUMMARY_PROMPT,HH_SUMMARY_PROMPT,POP_AGE_SUMMARY_PROMPT,POP_SUMMARY_PROMPT)
 from chains import get_chains_results, get_chain_result
 from gpt_params import MODELS, MAX_TOKEN
 from enums import FN
@@ -80,6 +81,14 @@ HH_SIZE_CHAIN = LLMChain(llm=llm, prompt=HH_SIZE_PROMPT, verbose=True)
 CIVIL_POP_CHAIN = LLMChain(llm=llm, prompt=CIVIL_POP_PROMPT, verbose=True)
 HH_INCOME_CHAIN = LLMChain(llm=llm, prompt=HH_INCOME_PROMPT, verbose=True)
 GENERAL_CHAIN = LLMChain(llm=llm, prompt=GENERAL_PROMPT, verbose=True)
+POP_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=POP_SUMMARY_PROMPT, verbose=True)
+HH_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=HH_SUMMARY_PROMPT, verbose=True)
+POP_AGE_CHAIN = LLMChain(llm=llm, prompt=POP_AGE_SUMMARY_PROMPT, verbose=True)
+PERSONAL_INCOME_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=PERSONAL_INCOME_SUMMARY_PROMPT, verbose=True)
+LANGUAGE_SPOKEN_CHAIN = LLMChain(llm=llm, prompt=LANGUAGE_SPOKEN_PROMPT, verbose=True)
+# CIVI_EMP_POP_IND_CHAIN = LLMChain(llm=llm, prompt=CIVI_EMP_POP_IND_PROMPT, verbose=True)
+# CONSUMER_SPEND_INFO_CHAIN = LLMChain(llm=llm, prompt=CONSUMER_SPEND_INFO_PROMPT, verbose=True)
+
 
 # ** Main **
 st.header("Powered by :robot_face:")
@@ -221,7 +230,7 @@ if selected_fn == FN.FN7.value:
 
     if input_text:
 
-        result, exec_time, tkn_cb = get_chain_execution_result(MAJOR_PLAER_PROMPT, {
+        result, exec_time, tkn_cb = get_chain_execution_result(MAJOR_PLAYER_CHAIN, {
             "major_players": input_text})
 
         st.markdown(f"#### Here are your results")
@@ -249,7 +258,7 @@ if selected_fn == FN.FN13.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(POP_RACE_ETHN_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.pop_race_ethnicity_formatter)
+            "obj1": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -273,7 +282,7 @@ if selected_fn == FN.FN14.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(POP_MATERIAL_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.pop_marital_status_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -297,7 +306,7 @@ if selected_fn == FN.FN15.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(POP_RELSHIP_HH_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.pop_relship_hh_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -321,7 +330,7 @@ if selected_fn == FN.FN16.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(POP_GENDER_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.pop_gender_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -345,7 +354,7 @@ if selected_fn == FN.FN17.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(POP_EDU_ATTAINMENT_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.pop_edu_attainment_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -369,7 +378,7 @@ if selected_fn == FN.FN18.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(DEMOGRAPHIC_OVERVIEW_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.demographic_overview_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -393,7 +402,7 @@ if selected_fn == FN.FN19.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(HH_SIZE_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.hh_size_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -417,7 +426,7 @@ if selected_fn == FN.FN20.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(CIVIL_POP_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.civil_pop_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -441,7 +450,7 @@ if selected_fn == FN.FN21.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(HH_INCOME_CHAIN, {
-            "obj": to_formatted_string(input_text, formatters.hh_income_formatter)
+            "obj": input_text,
             })
 
         st.markdown(f"#### Here are your results")
@@ -465,6 +474,160 @@ if selected_fn == FN.FN22.value:
     if input_text:
         
         result, exec_time, tkn_cb = get_chain_execution_result(GENERAL_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 23 ==
+if selected_fn == FN.FN23.value:
+
+    st.markdown("Function 23: The AI will explain the entered Population Summary chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_SUMMARY_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 24 ==
+if selected_fn == FN.FN24.value:
+
+    st.markdown("Function 24: The AI will explain the entered Population by Age Summary chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(POP_AGE_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 25 ==
+if selected_fn == FN.FN25.value:
+
+    st.markdown("Function 25: The AI will explain the entered House Hold Summary chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(HH_SUMMARY_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 26 ==
+if selected_fn == FN.FN26.value:
+
+    st.markdown("Function 26: The AI will explain the entered Personal Income Summary chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(PERSONAL_INCOME_SUMMARY_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 27 ==
+if selected_fn == FN.FN27.value:
+
+    st.markdown("Function 27: The AI will explain the entered Language Spoken chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(LANGUAGE_SPOKEN_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 28 ==
+if selected_fn == FN.FN28.value:
+
+    st.markdown("Function 28: The AI will explain the entered Civilian Employee population Industry card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(CIVI_EMP_POP_IND_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
+# == Function 29 ==
+if selected_fn == FN.FN29.value:
+
+    st.markdown("Function 29: The AI will explain the entered Consumer Spend Information card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(CONSUMER_SPEND_INFO_CHAIN, {"obj": input_text})
 
         st.markdown(f"#### Here are your results")
 

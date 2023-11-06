@@ -54,6 +54,14 @@ human_prompts_and_parsers_and_headings = [
     ),
     (
         PromptTemplate(
+            template="What are the current trends shaping the {industry_title} industry ?",
+            input_variables=["industry_title"]
+        ),
+        None,
+        "Current shaping trends"
+    ),
+    (
+        PromptTemplate(
             template="What is the supply and demand for {industry_title} industry ?",
             input_variables=["industry_title"]
         ),
@@ -133,14 +141,6 @@ human_prompts_and_parsers_and_headings = [
         ),
         None,
         "Key metrics to track"
-    ),
-    (
-        PromptTemplate(
-            template="What are the current trends shaping the {industry_title} industry ?",
-            input_variables=["industry_title"]
-        ),
-        None,
-        "Current shaping trends"
     ),
     (
         PromptTemplate(
@@ -257,9 +257,9 @@ POP_RACE_ETHN_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please review the graph and provide a summary of the most significant insights, focusing on."
-            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["obj"]
+            "Summarize population by race/ethnicity data, highlighting the key demographic trends and disparities in the distribution of racial and ethnic groups. Include information on the largest ethnic groups, their percentages, and any significant changes over recent years."
+            "\n\n>>>\n{obj1}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj1"]
         )
     )
 ])
@@ -269,7 +269,7 @@ POP_MATERIAL_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize population by marital status data, including key statistics and trends. Highlight the distribution of individuals across marital status categories, and provide insights into any changes or patterns observed over the years."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -281,7 +281,11 @@ POP_RELSHIP_HH_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize and provide key insights on population by relationship and household data"
+            " Analyze the distribution of various relationships within households"
+            "Highlight trends in household size, composition, and changes over time."
+            "Use this data to extract relevant information and draw meaningful conclusions about "
+            "the demographics and living arrangements of the population."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -293,7 +297,8 @@ POP_GENDER_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            # "Summarize the population by gender data for a specific region or country of your choice. Provide key insights, including the total population, gender distribution, age groups, and any notable trends or patterns observed in the data"
+            "Provide a concise summary of gender-based population data, focusing on significant demographic trends, gender distribution, and noteworthy shifts or disparities within the last ten years."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -305,7 +310,9 @@ POP_EDU_ATTAINMENT_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize and provide key insights from this data."
+            "Include information about educational levels, regional disparities,"
+            " and any notable trends or patterns observed in the data."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -317,7 +324,9 @@ DEMOGRAPHIC_OVERVIEW_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize and provide key insights from this data"
+            "Analyze the trends and patterns in the data to highlight significant findings,"
+            "potential challenges, and opportunities based on the demographic information."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -329,7 +338,9 @@ HH_SIZE_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize and provide key insights from the Household by Size data,"
+            " including trends, distribution, and any notable patterns or variations "
+            "in household sizes over this data."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -374,8 +385,19 @@ GENERAL_PROMPT = ChatPromptTemplate.from_messages([
     )
 ])
 
+LANGUAGE_SPOKEN_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Please analyze the Json data and provide a summary of its key insights."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
 
-HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+PERSONAL_INCOME_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
@@ -392,14 +414,39 @@ HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            ""
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
     )
 ])
 
-HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+
+POP_AGE_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Summarize the Population by Age Summary data, highlighting key insights and trends in age distribution, demographic shifts, and any notable patterns or anomalies."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+POP_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Summarize the key insights from the latest Population Summary data. Include information about population trends, demographics, and any significant changes observed in the data."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])
+
+CIVI_EMP_POP_IND_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
@@ -411,41 +458,40 @@ HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     )
 ])
 
-HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+CONSUMER_SPEND_INFO_PROMPT = ChatPromptTemplate.from_messages([
     system_msg_prompt,
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Please perform  the graph and provide a summary of its key insights."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
     )
 ])
 
+# IND_PERFORM_PROMPT = ChatPromptTemplate.from_messages([
+#     system_msg_prompt,
+#     HumanMessagePromptTemplate(
+#         prompt=PromptTemplate(
+#             template=
+#             "Please perform  the graph and provide a summary of its key insights."
+#             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+#             input_variables=["obj"]
+#         )
+#     )
+# ])
 
-HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
-    system_msg_prompt,
-    HumanMessagePromptTemplate(
-        prompt=PromptTemplate(
-            template=
-            "Please analyze the graph and provide a summary of its key insights."
-            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["obj"]
-        )
-    )
-])
-
-HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
-    system_msg_prompt,
-    HumanMessagePromptTemplate(
-        prompt=PromptTemplate(
-            template=
-            "Please analyze the graph and provide a summary of its key insights."
-            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["obj"]
-        )
-    )
-])
+# IND_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
+#     system_msg_prompt,
+#     HumanMessagePromptTemplate(
+#         prompt=PromptTemplate(
+#             template=
+#             "Please perform  the graph and provide a summary of its key insights."
+#             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+#             input_variables=["obj"]
+#         )
+#     )
+# ])
 
 
