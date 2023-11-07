@@ -4,16 +4,9 @@ from enum import Enum
 class FN(Enum):
     FN1 = "Function 1: Industry General Information"
     FN2 = "Function 2: Multiples Table Explanation"
-    # FN3 = "Function 3: Risk Table Explanation"
     FN4 = "Function 4: Barriers To Entry Checklist Explanation"
-    # FN5 = "Function 5: Main Activity Explanation"
     FN6 = "Function 6: Products and Services Explanation"
     FN7 = "Function 7: Major Players Explanation"
-    # FN8 = "Function 8: Definition and Summary"
-    # FN9 = "Function 9: Revenue Figure Card Explanation"
-    # FN10 = "Function 10: Profit Figure Card Explanation"
-    # FN11 = "Function 11: Profit Margin Figure Card Explanation"
-    # FN12 = "Function 12: Enterprises Figure Card Explanation"
 
 #/////////////// Demographic ///////////////////
     
@@ -26,7 +19,6 @@ class FN(Enum):
     FN19 = "Function 19: HouseHold by size Figure Card Explanation"
     FN20 = "Function 20: civilian population Figure Card Explanation"
     FN21 = "Function 21: HouseHolde Income Figure Card Explanation"
-    FN22 = "Function 22: General Figure Card Explanation"
     FN23 = "Function 23: Population Summary Card Explanation"
     FN24 = "Function 24: Population by Age Summary Card Explanation"
     FN25 = "Function 25: House Hold Summary Card Explanation"
@@ -36,4 +28,5 @@ class FN(Enum):
     FN29 = "Function 29: Consumer Spend Information Card Explanation"
     FN30 = "Function 30: Industry Perform Card Explanation"
     FN31 = "Function 31: Industry Summary Card Explanation"
+    FN32 = "Function 32: Wages Card Explanation"
 

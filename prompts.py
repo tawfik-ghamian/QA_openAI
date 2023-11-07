@@ -352,7 +352,10 @@ CIVIL_POP_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize and provide key insights from this data,"
+            " focusing on demographic trends, geographic distribution,"
+            " relevant socio-economic indicators, and any significant changes"
+            " observed in the data."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -364,21 +367,9 @@ HH_INCOME_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
-            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
-            input_variables=["obj"]
-        )
-    )
-])
-
-GENERAL_PROMPT = ChatPromptTemplate.from_messages([
-    system_msg_prompt,
-    HumanMessagePromptTemplate(
-        prompt=PromptTemplate(
-            template=
-            "Given a JSON schema representing your data, please provide a summary of the key insights and trends "
-            "that can be derived from this data. Highlight any important data points, patterns, or relationships that "
-            "are significant. Feel free to include relevant statistics or observations to make the summary as informative as possible."
+            "Summarize and provide key insights from household income data in the United States over the past decade,"
+            " including trends, disparities, and potential factors influencing income changes. Additionally,"
+            " discuss the methodology and factors to consider when forecasting household income data for the year 2027."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -390,7 +381,13 @@ LANGUAGE_SPOKEN_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the Json data and provide a summary of its key insights."
+            "Summarize and provide key insights from containing information data"
+            "about the languages spoken by different populations around the world. "
+            "The dataset includes details such as the number of speakers, language families, "
+            "geographical distribution, and any notable linguistic trends. Additionally, "
+            "make projections or forecasts based on this data for the year 2027, "
+            "highlighting expected changes in the most widely spoken languages, "
+            "language diversity, and any linguistic trends that may emerge in the near future."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -402,7 +399,10 @@ PERSONAL_INCOME_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please analyze the graph and provide a summary of its key insights."
+            "Summarize the key insights from a Personal Income Summary data,"
+            " highlighting trends, variations, and noteworthy findings within the data. "
+            "Provide an overview of income distribution, sources of income, "
+            "and any relevant demographic factors that may impact personal income."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -414,7 +414,10 @@ HH_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            ""
+            "Summarize and provide key insights from household summary data,"
+            " including information such as household size, income, location, and other relevant variables. "\
+            "Analyze the data to uncover significant trends, patterns, "
+            "and notable findings that can inform decision-making or policy recommendations."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -439,7 +442,7 @@ POP_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Summarize the key insights from the latest Population Summary data. Include information about population trends, demographics, and any significant changes observed in the data."
+            "Summarize and provide key insights from population summary data. including relevant forecasting results. Highlight significant demographic trends, population growth patterns, age distribution, and any noteworthy changes or patterns you identify in the data, with an emphasis on forecasting results for future population trends."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -463,7 +466,9 @@ CONSUMER_SPEND_INFO_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Please perform  the graph and provide a summary of its key insights."
+            "Summarize the key insights from Consumer Spend Information data, "
+            "including trends, patterns, and notable findings,"
+            " to understand consumer spending habits and preferences"
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -494,4 +499,16 @@ IND_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
     )
 ])
 
-
+WAGES_PROMPT = ChatPromptTemplate.from_messages([
+    system_msg_prompt,
+    HumanMessagePromptTemplate(
+        prompt=PromptTemplate(
+            template=
+            "Summarize and provide key insights from containing wage data."
+            "Include trends, average wages, "
+            "factors affecting wages,and any notable disparities or changes over time."
+            "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
+            input_variables=["obj"]
+        )
+    )
+])

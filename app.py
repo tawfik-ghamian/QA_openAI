@@ -12,9 +12,9 @@ from dotenv import load_dotenv
 from prompts import (PROMPTS, OUTPUT_PARSERS, HEADINGS,
                      MULTIPLES_TBL_PROMPT, BARRIERS_TO_ENTRY_PROMPT, PRODUCT_PROMPT, MAJOR_PLAYER_PROMPT,
                      POP_RACE_ETHN_PROMPT,POP_EDU_ATTAINMENT_PROMPT,POP_RELSHIP_HH_PROMPT,POP_MATERIAL_PROMPT,POP_GENDER_PROMPT,
-                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,GENERAL_PROMPT,LANGUAGE_SPOKEN_PROMPT,
+                     DEMOGRAPHIC_OVERVIEW_PROMPT,HH_SIZE_PROMPT,CIVIL_POP_PROMPT,HH_INCOME_PROMPT,LANGUAGE_SPOKEN_PROMPT,
                      PERSONAL_INCOME_SUMMARY_PROMPT,HH_SUMMARY_PROMPT,POP_AGE_SUMMARY_PROMPT,POP_SUMMARY_PROMPT,CIVI_EMP_POP_IND_PROMPT,
-                     CONSUMER_SPEND_INFO_PROMPT,IND_PERFORM_PROMPT,IND_SUMMARY_PROMPT)
+                     CONSUMER_SPEND_INFO_PROMPT,IND_PERFORM_PROMPT,IND_SUMMARY_PROMPT,WAGES_PROMPT)
 from chains import get_chains_results, get_chain_result
 from gpt_params import MODELS, MAX_TOKEN
 from enums import FN
@@ -81,7 +81,7 @@ DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMP
 HH_SIZE_CHAIN = LLMChain(llm=llm, prompt=HH_SIZE_PROMPT, verbose=True)
 CIVIL_POP_CHAIN = LLMChain(llm=llm, prompt=CIVIL_POP_PROMPT, verbose=True)
 HH_INCOME_CHAIN = LLMChain(llm=llm, prompt=HH_INCOME_PROMPT, verbose=True)
-GENERAL_CHAIN = LLMChain(llm=llm, prompt=GENERAL_PROMPT, verbose=True)
+# GENERAL_CHAIN = LLMChain(llm=llm, prompt=GENERAL_PROMPT, verbose=True)
 POP_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=POP_SUMMARY_PROMPT, verbose=True)
 HH_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=HH_SUMMARY_PROMPT, verbose=True)
 POP_AGE_CHAIN = LLMChain(llm=llm, prompt=POP_AGE_SUMMARY_PROMPT, verbose=True)
@@ -91,6 +91,7 @@ CIVI_EMP_POP_IND_CHAIN = LLMChain(llm=llm, prompt=CIVI_EMP_POP_IND_PROMPT, verbo
 CONSUMER_SPEND_INFO_CHAIN = LLMChain(llm=llm, prompt=CONSUMER_SPEND_INFO_PROMPT, verbose=True)
 IND_PERFORM_CHAIN = LLMChain(llm=llm, prompt=IND_PERFORM_PROMPT, verbose=True)
 IND_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=IND_SUMMARY_PROMPT, verbose=True)
+WAGES_CHAIN = LLMChain(llm=llm, prompt=WAGES_PROMPT, verbose=True)
 
 # ** Main **
 st.header("Powered by :robot_face:")
@@ -463,26 +464,26 @@ if selected_fn == FN.FN21.value:
             st.markdown(result)
 
 # == Function 22 ==
-if selected_fn == FN.FN22.value:
+# if selected_fn == FN.FN22.value:
 
-    st.markdown("Function 22: The AI will explain the entered general card chart of an industry")
+#     st.markdown("Function 22: The AI will explain the entered general card chart of an industry")
 
-    input_text = st.text_area(
-        label=" chart values",
-        placeholder="Enter the chart values ",
-        label_visibility="collapsed"
-    )
+#     input_text = st.text_area(
+#         label=" chart values",
+#         placeholder="Enter the chart values ",
+#         label_visibility="collapsed"
+#     )
 
-    if input_text:
+#     if input_text:
         
-        result, exec_time, tkn_cb = get_chain_execution_result(GENERAL_CHAIN, {"obj": input_text})
+#         result, exec_time, tkn_cb = get_chain_execution_result(GENERAL_CHAIN, {"obj": input_text})
 
-        st.markdown(f"#### Here are your results")
+#         st.markdown(f"#### Here are your results")
 
-        show_chain_execution_info(exec_time, tkn_cb)
+#         show_chain_execution_info(exec_time, tkn_cb)
 
-        with st.expander("##### Explanation"):
-            st.markdown(result)
+#         with st.expander("##### Explanation"):
+#             st.markdown(result)
 
 # == Function 23 ==
 if selected_fn == FN.FN23.value:
@@ -681,3 +682,26 @@ if selected_fn == FN.FN31.value:
 
         with st.expander("##### Explanation"):
             st.markdown(result)
+
+# == Function 32 ==
+if selected_fn == FN.FN32.value:
+
+    st.markdown("Function 32: The AI will explain the entered Wages card chart of an industry")
+
+    input_text = st.text_area(
+        label=" chart values",
+        placeholder="Enter the chart values ",
+        label_visibility="collapsed"
+    )
+
+    if input_text:
+        
+        result, exec_time, tkn_cb = get_chain_execution_result(WAGES_CHAIN, {"obj": input_text})
+
+        st.markdown(f"#### Here are your results")
+
+        show_chain_execution_info(exec_time, tkn_cb)
+
+        with st.expander("##### Explanation"):
+            st.markdown(result)
+
