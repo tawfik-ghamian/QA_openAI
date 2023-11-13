@@ -382,13 +382,13 @@ LANGUAGE_SPOKEN_PROMPT = ChatPromptTemplate.from_messages([
         prompt=PromptTemplate(
             template=
             "Summarize and provide key insights from containing information data"
-            "about the languages spoken by different populations around the world. "
-            "The dataset includes details such as the number of speakers, language families, "
+            "about the languages spoken by different populations . "
+            "The data includes details such as the number of speakers, language families, "
             "geographical distribution, and any notable linguistic trends. Additionally, "
             "make projections or forecasts based on this data for the year 2027, "
             "highlighting expected changes in the most widely spoken languages, "
             "language diversity, and any linguistic trends that may emerge in the near future."
-            "format the response in a paragraph "
+            "format the response in a paragraph with a summary of key implications"
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
