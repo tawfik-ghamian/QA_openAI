@@ -398,7 +398,7 @@ def populationByAge_forecast_formatter(obj):
     return table
 
 def pop_summary_forecast_formatter(obj):
-    jsondecoded = json100.get("PopulationSummary","")
+    jsondecoded = obj.get("PopulationSummary","")
     component = ["Name"] +list(jsondecoded["Targets"][0]["Row"].keys())
     rows = [
         "".join([f"{c:<30}" for c in component ]),

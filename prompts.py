@@ -388,6 +388,7 @@ LANGUAGE_SPOKEN_PROMPT = ChatPromptTemplate.from_messages([
             "make projections or forecasts based on this data for the year 2027, "
             "highlighting expected changes in the most widely spoken languages, "
             "language diversity, and any linguistic trends that may emerge in the near future."
+            "format the response in a paragraph "
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -401,8 +402,6 @@ PERSONAL_INCOME_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
             template=
             "Summarize the key insights from a Personal Income Summary data,"
             " highlighting trends, variations, and noteworthy findings within the data. "
-            "Provide an overview of income distribution, sources of income, "
-            "and any relevant demographic factors that may impact personal income."
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -466,9 +465,9 @@ CONSUMER_SPEND_INFO_PROMPT = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             template=
-            "Summarize the key insights from Consumer Spend Information data, "
+            "Summarize the key insights analysis from Consumer Spend Information data, "
             "including trends, patterns, and notable findings,"
-            " to understand consumer spending habits and preferences"
+            " to understand consumer spending habits and preferences"            
             "\n\n>>>\n{obj}\n<<<\n\nYOUR RESPONSE:",
             input_variables=["obj"]
         )
@@ -512,3 +511,5 @@ WAGES_PROMPT = ChatPromptTemplate.from_messages([
         )
     )
 ])
+
+# IBIS_PROMTS = PROMPTS + [IND_SUMMARY_PROMPT, IND_PERFORM_PROMPT]

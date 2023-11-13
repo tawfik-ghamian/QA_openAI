@@ -81,7 +81,6 @@ DEMOGRAPHIC_OVERVIEW_CHAIN = LLMChain(llm=llm, prompt=DEMOGRAPHIC_OVERVIEW_PROMP
 HH_SIZE_CHAIN = LLMChain(llm=llm, prompt=HH_SIZE_PROMPT, verbose=True)
 CIVIL_POP_CHAIN = LLMChain(llm=llm, prompt=CIVIL_POP_PROMPT, verbose=True)
 HH_INCOME_CHAIN = LLMChain(llm=llm, prompt=HH_INCOME_PROMPT, verbose=True)
-# GENERAL_CHAIN = LLMChain(llm=llm, prompt=GENERAL_PROMPT, verbose=True)
 POP_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=POP_SUMMARY_PROMPT, verbose=True)
 HH_SUMMARY_CHAIN = LLMChain(llm=llm, prompt=HH_SUMMARY_PROMPT, verbose=True)
 POP_AGE_CHAIN = LLMChain(llm=llm, prompt=POP_AGE_SUMMARY_PROMPT, verbose=True)
@@ -463,28 +462,6 @@ if selected_fn == FN.FN21.value:
         with st.expander("##### Explanation"):
             st.markdown(result)
 
-# == Function 22 ==
-# if selected_fn == FN.FN22.value:
-
-#     st.markdown("Function 22: The AI will explain the entered general card chart of an industry")
-
-#     input_text = st.text_area(
-#         label=" chart values",
-#         placeholder="Enter the chart values ",
-#         label_visibility="collapsed"
-#     )
-
-#     if input_text:
-        
-#         result, exec_time, tkn_cb = get_chain_execution_result(GENERAL_CHAIN, {"obj": input_text})
-
-#         st.markdown(f"#### Here are your results")
-
-#         show_chain_execution_info(exec_time, tkn_cb)
-
-#         with st.expander("##### Explanation"):
-#             st.markdown(result)
-
 # == Function 23 ==
 if selected_fn == FN.FN23.value:
 
@@ -704,4 +681,6 @@ if selected_fn == FN.FN32.value:
 
         with st.expander("##### Explanation"):
             st.markdown(result)
+
+
 
